@@ -7,21 +7,25 @@ public class HangManLogic {
     //store categories and words
 
 
-    Category c1;
-    String currWord= "";
+    public Category c1;
+    public String currWord= "";
 
-    HangManLogic(){
+    public HangManLogic(){
         c1= new Category("Default");
         currWord= "";
     }
-    void setCategory(Category c1){
+    public HangManLogic(Category c1){
+        this.c1= c1;
+        currWord= "";
+    }
+    public void setCategory(Category c1){
         this.c1= c1;
     }
     //need function to get word or something
-    void setWord(){
+    public String setWord(){
 
            currWord =  c1.list.pop();
-
+            return currWord;
     }
 
 

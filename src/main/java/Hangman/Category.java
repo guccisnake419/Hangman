@@ -16,12 +16,24 @@ public class Category implements Categories {
     }
     Category(String category,ArrayList<String> list ){
         this.category= category;
+        this.list = new Stack<>();
+        this.populateCategory(list);
+    }
+    public Category(String category, String list[]){
+        this.category= category;
+        this.list = new Stack<>();
         this.populateCategory(list);
     }
     @Override
     public void populateCategory(ArrayList<String> list) {
         for (var a : list
              ) {
+            this.list.push(a);
+        }
+    }
+    public void populateCategory(String list[]) {
+        for (var a : list
+        ) {
             this.list.push(a);
         }
     }
