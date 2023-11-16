@@ -103,7 +103,7 @@ public class Server{
                 System.out.println("Streams not open");
             }
 
-            updateClients("new client on server: client #"+count);
+//            updateClients("new client on server: client #"+count);
 
             while(true) {
                 try {
