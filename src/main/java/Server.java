@@ -111,11 +111,9 @@ public class Server{
                     callback.accept("client: " + count + " sent: " + data);
 //                    updateClients("client #"+count+" sent: "+data);
                     //handle the data sent, and send response back to client
-                    int index= data.indexOf(" ");
-                    cat= data.substring(index+1);
-                    c1=new Category(cat, GameUtil.map.get(cat));
-                    hangManLogic= new HangManLogic(c1);
-                    send(String.valueOf(hangManLogic.setWord().length()));
+                    handleRequest(data);
+
+
 
 
 
@@ -129,6 +127,40 @@ public class Server{
                 }
             }
         }//end of run
+        public void handleRequest(String data){
+
+            int index= data.indexOf(" ");
+            String response= new String();
+
+
+            cat= data.substring(index+1);
+            if(data.contains("CATEGORY:")){
+                c1=new Category(cat, GameUtil.map.get(cat));
+                hangManLogic= new HangManLogic(c1);
+                response= "LEN: "+ String.valueOf(hangManLogic.setWord().length());
+                send(response);
+                callback.accept("Server: "+response);
+            }
+            else if(data.contains("CHECK:")){
+                response = new String("LOC: "+cat.charAt(0));
+                ArrayList<Integer> list= hangManLogic.checkGuess(cat.charAt(0));
+                for (int i=0; i< list.size(); i++) {
+
+                    response= response+";"+String.valueOf(list.get(i));
+                }
+                if(list.size()==0){
+                    response= response+";NIL";
+                }
+                send(response);
+                callback.accept("Server: "+response);
+
+
+            }
+
+
+
+
+        }
 
         public void send(String data) {
 

@@ -24,13 +24,13 @@ public class HangManLogic {
     //need function to get word or something
     public String setWord(){
 
-           currWord =  c1.list.pop();
+           currWord =  c1.list.pop().toUpperCase();
             return currWord;
     }
 
 
     //need fucntion to check the position of a guess in the word
-    ArrayList<Integer> checkGuess(char x){
+    public ArrayList<Integer> checkGuess(char x){
         ArrayList<Integer> list = new ArrayList<>();
         for(int i=0; i< currWord.length(); i++){
             if(currWord.charAt(i)==x){
