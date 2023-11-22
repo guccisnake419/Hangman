@@ -9,6 +9,7 @@ import java.util.Map;
 public class GameUtil {
     static String animals[]= {"Elephant", "Buffalo", "Rhinoceros", "Giraffe", "Dragonfly"};
     static String brands[]= {"Microsoft", "Adidas", "Lamborghini"};
+    static String places[]= {"Bangkok", "Chicago", "Soweto", "Manhattan"};
 
 
 
@@ -17,6 +18,7 @@ public class GameUtil {
     public static void  run(){
         map.put("Animals", animals);
         map.put("Brands", brands);
+        map.put("Places", places);
     }
 
 }

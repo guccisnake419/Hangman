@@ -1,20 +1,21 @@
 package Hangman;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Category implements Categories {
 
-    String category;
-    Stack<String> list;
+    public String category;
+    public Stack<String> list;
 
 
 
-    Category(String category){
+    public Category(String category){
         this.category= category;
         list = new Stack<>();
     }
-    Category(String category,ArrayList<String> list ){
+    public Category(String category,List<String> list ){
+
         this.category= category;
         this.list = new Stack<>();
         this.populateCategory(list);
@@ -31,7 +32,13 @@ public class Category implements Categories {
             this.list.push(a);
         }
     }
-    public void populateCategory(String list[]) {
+    public void populateCategory(List<String> list) {
+        for (var a : list
+        ) {
+            this.list.push(a);
+        }
+    }
+    public void populateCategory(String[] list) {
         for (var a : list
         ) {
             this.list.push(a);

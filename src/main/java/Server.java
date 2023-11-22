@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 import Hangman.GameUtil;
@@ -44,7 +47,7 @@ public class Server{
 
         public void run() {
 
-            try(ServerSocket mysocket = new ServerSocket(5555);){
+            try(ServerSocket mysocket = new ServerSocket(HangmanServerGUI.port);){
                 System.out.println("Server is waiting for a client!");
 
 
@@ -77,9 +80,12 @@ public class Server{
         HangManLogic hangManLogic;
         String cat;
 
+        ArrayList<String> preCat;
+
         ClientThread(Socket s, int count){
             this.connection = s;
             this.count = count;
+            preCat= new ArrayList<>();
         }
 
         public void updateClients(String message) {
@@ -133,13 +139,21 @@ public class Server{
             String response= new String();
 
 
-            cat= data.substring(index+1);
+            if(index != -1) cat= data.substring(index+1);
             if(data.contains("CATEGORY:")){
-                c1=new Category(cat, GameUtil.map.get(cat));
+                String list[]=   GameUtil.map.get(cat);
+                List nList= Arrays.asList(list);
+                Collections.shuffle(nList);
+                c1=new Category(cat, nList);
                 hangManLogic= new HangManLogic(c1);
-                response= "LEN: "+ String.valueOf(hangManLogic.setWord().length());
+                hangManLogic.setWord();
+                while(preCat.contains(hangManLogic.currWord)){
+                    hangManLogic.setWord();
+                }
+                response= "LEN: "+ String.valueOf(hangManLogic.currWord.length());
                 send(response);
-                callback.accept("Server: "+response);
+                callback.accept("Server sent Client "+count+": "+response);
+                preCat.add(hangManLogic.currWord);
             }
             else if(data.contains("CHECK:")){
                 response = new String("LOC: "+cat.charAt(0));
@@ -152,8 +166,15 @@ public class Server{
                     response= response+";NIL";
                 }
                 send(response);
-                callback.accept("Server: "+response);
+                callback.accept("Server sent Client "+count+": "+response);
 
+
+            }
+            else if(data.contains("RESET")){
+                c1= null;
+                hangManLogic= null;
+                preCat= new ArrayList<>();
+                cat = null;
 
             }
 

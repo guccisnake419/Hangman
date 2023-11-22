@@ -24,8 +24,9 @@ public class HangManLogic {
     //need function to get word or something
     public String setWord(){
 
-           currWord =  c1.list.pop().toUpperCase();
-            return currWord;
+          if(!c1.list.isEmpty()) {currWord =  c1.list.pop().toUpperCase();
+            return currWord;}
+          return "";
     }
 
 
